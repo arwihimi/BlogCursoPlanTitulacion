@@ -88,4 +88,10 @@ class Usuario
             }
         }
     }
+
+    static public function ListarUsuarios(){
+        $usuarios = UsuarioModel::obetenerUsuarios();
+
+        return $usuarios;
+    }
 }
