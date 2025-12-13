@@ -54,5 +54,14 @@
             $stmt->execute();
             return $stmt->fetch();
         }
+
+        static public function obetenerUsuarios(){
+            $stmt=Conexion::conectar()->prepare("SELECT p.nombre, p.paterno, p.materno, u.usuario, u.id_usuario, 
+            (select count(*) from pregunta p where p.id_usuario = u.id_usuario) as cantidad_preguntas, 
+            (select count(*) from respuesta r where r.id_usuario = u.id_usuario) as cantidad_respuestas FROM persona p inner join usuario u 
+            ON p.id_persona=u.id_usuario");
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
     }
 ?>
