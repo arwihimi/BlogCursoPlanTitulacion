@@ -51,6 +51,45 @@ class Usuario
             }
         }
     }
+    public function editarUsuario()
+    {
+        //var_dump($_POST);
+        if (isset($_POST['nombre']) && isset($_POST['paterno']) && isset($_POST['materno']) && isset($_POST['correo']) ) {
+            if (self::validarEntrada($_POST['nombre']) && self::validarEntrada($_POST['paterno']) && self::validarEntrada($_POST['materno'])) {
+                $datos = array(
+                    'nombre' => trim($_POST['nombre']),
+                    'paterno' => trim($_POST['paterno']),
+                    'materno' => trim($_POST['materno']),
+                    'id' => trim($_SESSION['id'])
+                );
+
+                $id_persona = UsuarioModel::editarPersona("persona", $datos);
+                /*var_dump($id_persona);
+                exit;*/
+
+                $datos = array(
+                    'id_usuario' => trim($_SESSION['id']),
+                    'usuario' => trim($_POST['correo']),
+                );
+
+                $respuesta = UsuarioModel::editarUsuario("usuario", $datos);
+                if ($respuesta) {
+                    /*var_dump($respuesta);
+                    exit;*/
+                    echo "<div class='alert alert-danger mt-2' role='alert'>
+                    Datos editados correctamente
+                    </div>";
+                    $persona = UsuarioModel::obtenerPersona($_SESSION['id']);
+                    self::iniciarSesion($persona);
+                }
+
+            } else {
+                echo "<div class='alert alert-danger mt-2' role='alert'>
+                Datos inválidos los campos solo pueden contener letra y espacios
+                </div>";
+            }
+        }
+    }
 
     static private function validarEntrada($input)
     {
@@ -64,6 +103,7 @@ class Usuario
         $_SESSION['paterno'] = $persona['paterno'];
         $_SESSION['materno'] = $persona['materno'];
         $_SESSION['usuario'] = $persona['usuario'];
+        $_SESSION['imagen'] = $persona['imagen'];
         $_SESSION['rol'] = $persona['rol'];
         echo '<script>
             window.location="' . BASE_URL . '";

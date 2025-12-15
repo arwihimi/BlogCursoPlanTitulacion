@@ -24,6 +24,24 @@
                 return false;
             }
         }
+
+        
+        static public function editarPersona($tabla,$datos){
+            $sql="UPDATE $tabla SET nombre = :nombre, paterno = :paterno, materno = :materno WHERE id_persona = :id;";
+            $con=Conexion::conectar();
+            $stmt=$con->prepare($sql);
+            $stmt->bindParam(":nombre",$datos['nombre'],PDO::PARAM_STR);
+            $stmt->bindParam(":paterno",$datos['paterno'],PDO::PARAM_STR);
+            $stmt->bindParam(":materno",$datos['materno'],PDO::PARAM_STR);
+            $stmt->bindParam(":id",$datos['id'],PDO::PARAM_INT);
+            
+            if($stmt->execute()){
+                return $con->lastInsertId();
+            }else{
+                return false;
+            }
+        }
+
         static public function registroUsuario($tabla,$datos){
             $stmt=Conexion::conectar()->prepare("INSERT INTO $tabla(id_usuario,usuario,clave,rol) 
             VALUES(:id_usuario,:usuario,:clave,:rol)");
@@ -32,6 +50,19 @@
             $stmt->bindParam(":usuario",$datos['usuario'],PDO::PARAM_STR);
             $stmt->bindParam(":clave",$datos['clave'],PDO::PARAM_STR);
             $stmt->bindParam(":rol",$datos['rol'],PDO::PARAM_STR);
+            
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        static public function editarUsuario($tabla,$datos){
+            $stmt=Conexion::conectar()->prepare("UPDATE $tabla SET usuario = :usuario WHERE id_usuario = :id_usuario;");
+
+            $stmt->bindParam(":id_usuario",$datos['id_usuario'],PDO::PARAM_INT);
+            $stmt->bindParam(":usuario",$datos['usuario'],PDO::PARAM_STR);
             
             if($stmt->execute()){
                 return true;
