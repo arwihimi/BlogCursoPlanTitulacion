@@ -71,6 +71,20 @@
                 return false;
             }
         }
+        
+        static public function editarContrasena($tabla,$datos){
+            $stmt=Conexion::conectar()->prepare("UPDATE $tabla SET clave = :clave WHERE id_usuario = :id_usuario;");
+
+            $stmt->bindParam(":id_usuario",$datos['id'],PDO::PARAM_INT);
+            $stmt->bindParam(":clave",$datos['clave'],PDO::PARAM_STR);
+            
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         static public function obtenerPersona(int $id_persona){
             $stmt=Conexion::conectar()->prepare("SELECT * FROM persona p inner join usuario u 
             ON p.id_persona=u.id_usuario WHERE p.id_persona=:id_persona");

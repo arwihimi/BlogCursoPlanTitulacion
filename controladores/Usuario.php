@@ -112,6 +112,30 @@ class Usuario
         }
     }
 
+    public function CambiarContrasena()
+    {
+        if (isset($_POST['clave']) && isset($_POST['repita_clave'])) {
+           
+            if ($_POST['clave'] === $_POST['repita_clave']) {
+                $datos = array(
+                    'clave' => password_hash(trim($_POST['clave']), PASSWORD_DEFAULT),
+                    'id' => trim($_SESSION['id'])    
+                );
+                $respuesta = UsuarioModel::editarContrasena("usuario", $datos);
+
+                session_start();
+                session_destroy();
+                echo '<script>
+                        window.location="' . BASE_URL . 'login";
+                    </script>';
+            }else {
+                echo "<div class='alert alert-danger mt-2' role='alert'>
+                Las contraseñas no coinciden
+                </div>";
+            }
+        }
+    }
+
     static private function validarEntrada($input)
     {
         return preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $input);

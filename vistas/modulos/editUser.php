@@ -20,10 +20,10 @@
             <div class="row">
                 <div class="col-md-3">
                     <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline" >
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="img-fluid img-circle" style="height: 100px important;" src="<?= BASE_URL . $_SESSION['imagen'] ?>" alt="User profile picture">
+                                <img class="img-fluid img-circle"  src="<?= BASE_URL . $_SESSION['imagen'] ?>" alt="User profile picture">
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -88,6 +88,47 @@
             <?php
                 $usuario=new Usuario();
                 $usuario->editarUsuario();
+            ?>
+        </form>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Profile Image -->
+                    
+                    <!-- /.card -->
+
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <h3>Cambiar Contraseña</h3>
+                                <button type="submit" class="btn btn-primary ">Editar</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="titulo">Nombre</label>
+                                    <input type="password" class="form-control" name="clave" id="clave" required/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="paterno">Apellido Paterno</label>
+                                    <input type="password" class="form-control" name="repita_clave" id="repita_clave" required />
+                                </div>
+                            </div>
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <?php
+                $usuario=new Usuario();
+                $usuario->CambiarContrasena();
             ?>
         </form>
     </div>
