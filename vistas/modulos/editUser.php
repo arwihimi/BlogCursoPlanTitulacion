@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <!-- /.card-body -->
-                    </div>s
+                    </div>
                     <!-- /.card -->
 
                 </div>
