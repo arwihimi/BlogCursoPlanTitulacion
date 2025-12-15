@@ -56,16 +56,37 @@ class Usuario
         //var_dump($_POST);
         if (isset($_POST['nombre']) && isset($_POST['paterno']) && isset($_POST['materno']) && isset($_POST['correo']) ) {
             if (self::validarEntrada($_POST['nombre']) && self::validarEntrada($_POST['paterno']) && self::validarEntrada($_POST['materno'])) {
+                $foto = $_SESSION['imagen'];
+                if (!empty($_FILES['foto']['type'])) {
+                    if (self::validarImagen($_FILES['foto']['type'])) {
+                        $directorio = "vistas/upload/personas/";
+                        $archivo = $directorio . time(). $_SESSION['nombre'] . $_SESSION['id'] . '.' . pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
+                        if (move_uploaded_file($_FILES['foto']['tmp_name'], $archivo)) {
+                            $foto = $archivo;
+                        }else{
+                            echo "<div class='alert alert-danger mt-2' role='alert'>
+                                Ocurrio un error al guardar la imagen, intente de nuevo.
+                            </div>";
+
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger mt-2' role='alert'>
+                            Debe ingresar una imagen en el formato: jpeg, png o jpg.
+                        </div>";
+                    }
+                    
+                } 
+                
                 $datos = array(
                     'nombre' => trim($_POST['nombre']),
                     'paterno' => trim($_POST['paterno']),
                     'materno' => trim($_POST['materno']),
-                    'id' => trim($_SESSION['id'])
+                    'id' => trim($_SESSION['id']),
+                    'imagen' => $foto
                 );
 
                 $id_persona = UsuarioModel::editarPersona("persona", $datos);
-                /*var_dump($id_persona);
-                exit;*/
+                
 
                 $datos = array(
                     'id_usuario' => trim($_SESSION['id']),
@@ -94,6 +115,11 @@ class Usuario
     static private function validarEntrada($input)
     {
         return preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $input);
+    }
+
+    static private function validarImagen($tipo)
+    {
+        return $tipo == 'image/jpeg' || $tipo == 'image/png' || $tipo == 'image/jpg';
     }
 
     static private function iniciarSesion($persona)

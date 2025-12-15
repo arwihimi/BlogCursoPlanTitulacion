@@ -27,12 +27,13 @@
 
         
         static public function editarPersona($tabla,$datos){
-            $sql="UPDATE $tabla SET nombre = :nombre, paterno = :paterno, materno = :materno WHERE id_persona = :id;";
+            $sql="UPDATE $tabla SET nombre = :nombre, paterno = :paterno, materno = :materno, imagen = :imagen WHERE id_persona = :id;";
             $con=Conexion::conectar();
             $stmt=$con->prepare($sql);
             $stmt->bindParam(":nombre",$datos['nombre'],PDO::PARAM_STR);
             $stmt->bindParam(":paterno",$datos['paterno'],PDO::PARAM_STR);
             $stmt->bindParam(":materno",$datos['materno'],PDO::PARAM_STR);
+            $stmt->bindParam(":imagen",$datos['imagen'],PDO::PARAM_STR);
             $stmt->bindParam(":id",$datos['id'],PDO::PARAM_INT);
             
             if($stmt->execute()){

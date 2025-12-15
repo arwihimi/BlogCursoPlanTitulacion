@@ -72,8 +72,8 @@
                                 <label for="exampleInputFile">Cargar Imagen</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="foto" name="foto"/>
-                                        <label class="custom-file-label" for="foto">seleccione la foto</label>
+                                        <input type="file" class="form-control" id="foto" name="foto"/>
+                                        
                                     </div>
                                 </div>
                             </div>
