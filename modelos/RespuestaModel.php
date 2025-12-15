@@ -5,8 +5,8 @@ class RespuestaModel
 {
     static public function listar($tabla, $columna, $valor)
     {
-        $stmt = Conexion::conectar()->prepare("SELECT r.*,CONCAT_WS(' ',pe.nombre,pe.paterno,pe.materno) 
-                as usuario FROM $tabla r JOIN usuario u ON r.id_usuario=u.id_usuario inner join persona pe 
+        $stmt = Conexion::conectar()->prepare("SELECT r.*,CONCAT_WS(' ',pe.nombre,pe.paterno,pe.materno)
+                as usuario, pe.imagen FROM $tabla r JOIN usuario u ON r.id_usuario=u.id_usuario inner join persona pe 
                 ON u.id_usuario=pe.id_persona WHERE $columna=:$columna");
         $stmt->bindParam(":" . $columna, $valor, PDO::PARAM_INT);
         $stmt->execute();

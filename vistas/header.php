@@ -38,7 +38,7 @@
                 <a href="<?= BASE_URL ?>registro" class="btn btn-primary btn-sm ml-1">Regístrate</a>
             <?php else: ?>
                 <div class="image">
-                    <img src="<?= BASE_URL ?>vistas/dist/images/user.png" class="img-circle" width="30" alt="Imagen de usuario">
+                    <img src="<?= BASE_URL . $_SESSION['imagen'] ?>" class="img-circle" width="30" alt="Imagen de usuario">
                 </div>
                 <?= $_SESSION['nombre'] . ' ' . $_SESSION['paterno'] ?>
                 <a href="<?= BASE_URL ?>/salir" class="btn btn-outline-danger ml-1 btn-sm">

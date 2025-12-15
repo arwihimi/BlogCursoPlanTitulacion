@@ -27,7 +27,7 @@ $usuarios = Usuario::ListarUsuarios();
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle" src="<?= BASE_URL ?>vistas/dist/images/user.png" alt="User profile picture">
+                            <img class="profile-user-img img-fluid img-circle" src="<?= BASE_URL . $res['imagen'] ?>" alt="User profile picture">
                         </div>
 
                         <h3 class="profile-username text-center"> <?= $res['nombre'] . ' ' . $res['paterno'] . ' ' . $res['materno'] ?></h3>
