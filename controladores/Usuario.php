@@ -36,7 +36,7 @@ class Usuario
                             /*var_dump($respuesta);
                             exit;*/
                             $persona = UsuarioModel::obtenerPersona($id_persona);
-                            self::iniciarSesion($persona);
+                            self::iniciarSesion($persona, 1);
                         }
                     }
                 } else {
@@ -101,7 +101,7 @@ class Usuario
                     Datos editados correctamente
                     </div>";
                     $persona = UsuarioModel::obtenerPersona($_SESSION['id']);
-                    self::iniciarSesion($persona);
+                    self::iniciarSesion($persona,2);
                 }
 
             } else {
@@ -122,7 +122,7 @@ class Usuario
         return $tipo == 'image/jpeg' || $tipo == 'image/png' || $tipo == 'image/jpg';
     }
 
-    static private function iniciarSesion($persona)
+    static private function iniciarSesion($persona, $vista)
     {
         $_SESSION['id'] = $persona['id_persona'];
         $_SESSION['nombre'] = $persona['nombre'];
@@ -131,9 +131,16 @@ class Usuario
         $_SESSION['usuario'] = $persona['usuario'];
         $_SESSION['imagen'] = $persona['imagen'];
         $_SESSION['rol'] = $persona['rol'];
-        echo '<script>
-            window.location="' . BASE_URL . '";
-        </script>';
+        if ($vista == 1) {
+            echo '<script>
+                window.location="' . BASE_URL . '";
+            </script>';
+        } else {
+            echo '<script>
+                window.location="' . BASE_URL . '/perfil";
+            </script>';
+        }
+        
     }
     static public function loginUsuario()
     {
@@ -141,7 +148,7 @@ class Usuario
             $usuario = UsuarioModel::obtenerPersonaPorUsuario($_POST['usuario']);
             if ($usuario) {
                 if (password_verify($_POST['clave'], $usuario['clave'])) {
-                    self::iniciarSesion($usuario);
+                    self::iniciarSesion($usuario, 1);
                 } else {
                     echo "<div class='alert alert-danger mt-2' role='alert'>
                     Contraseña incorrecta
